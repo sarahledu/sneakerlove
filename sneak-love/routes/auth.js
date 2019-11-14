@@ -33,7 +33,7 @@ router.post("/signup", (req, res, next) => {
       }
       const salt = bcrypt.genSaltSync(bcryptSalt);
       const hashPass = bcrypt.hashSync(password, salt);
-      user.password = hashed;
+      //user.password = hashed;
 
       //console.log(req.body);
       userModel
@@ -44,7 +44,7 @@ router.post("/signup", (req, res, next) => {
           password: hashPass
         })
         .then(userRes => {
-          res.render("signup", { user: userRes });
+          res.render("signin", { user: userRes });
         })
         .catch(error => {
           console.log(error);
@@ -59,4 +59,37 @@ router.get("/signin", (req, res) => {
   res.render("signin");
 });
 
+router.post("/signin",(req,res)=>{
+    const theEmail = req.body.email;
+    const thePassword = req.body.password;
+    
+  if (theEmail === "" || thePassword === "") {
+    res.render("signin", {
+      msg: "Please enter both, email and password to sign in."
+    });
+    return;
+  }
+  
+  userModel.findOne({ "email": theEmail })
+  .then(user => {
+      if (!user) {
+        res.render("signin", {
+          msg: "The email doesn't exist."
+        });
+        return;
+      }
+      if (bcrypt.compareSync(thePassword, user.password)) {
+        // Save the login in the session!
+        req.session.currentUser = user;
+        res.redirect("/");
+      } else {
+        res.render("signin", {
+          msg: "Incorrect password"
+        });
+      }
+  })
+  .catch(error => {
+    next(error);
+  })
+})
 module.exports = router;

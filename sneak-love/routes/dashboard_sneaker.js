@@ -91,8 +91,7 @@ router.post("/product-edit/:id", (req, res) => {
 
 router.get("/delete-product/:id", (req, res) => {
   sneakerModel.findByIdAndRemove(req.params.id).then(dbRes => {
-    // req.flash("success", "product successfully deleted");
-    res.redirect("/products_manage");
+    res.redirect("/products-manage");
   });
 });
 

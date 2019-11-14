@@ -17,9 +17,9 @@ router.get("/all-sneakers", (req, res) => {
 // BACKEND ROUTES
 
 router.get("/create-product", (req, res) => {
-  sneakerModel.find().then(dbRes => {
-    res.render("products_add", { sneakers: dbRes });
-  });
+  
+    res.render("products_add")
+ 
 });
 
 router.post("/create-product", (req, res) => {

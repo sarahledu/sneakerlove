@@ -17,29 +17,30 @@ router.get("/all-sneakers", (req, res) => {
 // BACKEND ROUTES
 
 router.get("/create-product", (req, res) => {
-  
-    res.render("products_add")
- 
+  res.render("products_add");
 });
 
 router.post("/create-product", (req, res) => {
   const newSneaker = {
     name: req.body.name,
     ref: req.body.ref,
+    size: req.body.size,
+    description: req.body.description,
     price: req.body.price,
+    image: req.body.img,
     category: req.body.category
   };
 
   sneakerModel
     .create(newSneaker)
     .then(() => {
-      req.flash("success", "product successfully created");
-      res.redirect("products_manage");
+      //   req.flash("success", "product successfully created");
+      res.redirect("/products-manage");
     })
     .catch(dbErr => console.error(dbErr));
 });
 
-router.get("/manage-products", (req, res) => {
+router.get("/products-manage", (req, res) => {
   sneakerModel
     .find()
     .populate("tag")

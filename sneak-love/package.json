@@ -1,7 +1,7 @@
 {
   "name": "shop-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "Good news : Your team has been selected by our final client !",
   "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -12,13 +12,14 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "hbs": "^4.0.4",
-    "mongoose": "^5.6.1",
+    "mongoose": "^5.7.10",
     "multer-storage-cloudinary": "^2.2.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon ./server.js -e js,hbs"
+    "server": "nodemon ./server.js -e js,hbs",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

@@ -27,18 +27,18 @@ router.post("/create-product", (req, res) => {
   const newSneaker = {
     name: req.body.name,
     ref: req.body.ref,
+    price: req.body.price,
     size: req.body.size,
     description: req.body.description,
-    price: req.body.price,
     image: req.body.img,
-    category: req.body.category
+    category: req.body.category,
+    id_tags: req.body.tags
   };
 
   sneakerModel
     .create(newSneaker)
-    .populate("tag")
     .then(() => {
-      //   req.flash("success", "product successfully created");
+      //req.flash("success", "product successfully created");
       res.redirect("/products-manage");
     })
     .catch(dbErr => console.error(dbErr));
@@ -59,14 +59,26 @@ router.get("/products-manage", (req, res) => {
 router.get("/product-edit/:id", (req, res) => {
   sneakerModel
     .findById(req.params.id)
-    .populate("tag")
     .then(dbRes => {
-      sneakerModel.find().then(tags => {
-        res.render("product_edit", {
-          sneaker: dbRes,
-          tag: id_tags,
-          css: ["products-manage"]
-        });
+      var tagsLabel = [];
+      console.log(dbRes.id_tags);
+      //dbRes = élément de la collection recherchée (la sneaker)
+      //cet élément détient un array d'id de tag (autre collection).
+      //ce qu'on souhaite à la fin est un array d'éléments de la collection Tag correspondant aux id de tag
+      dbRes.id_tags.forEach(element => {
+        tagModel
+          .findById(element)
+          .then(tagRes => {
+            tagsLabel.push(tagRes);
+          })
+          .finally(() => {
+            res.render("product_edit", {
+              sneaker: dbRes,
+              tags: tagsLabel,
+              css: ["products-manage"]
+            });
+          })
+          .catch(err => console.error(err));
       });
     })
     .catch(dbErr => console.log(dbErr));

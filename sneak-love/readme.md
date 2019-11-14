@@ -14,7 +14,7 @@ So you won't have to deal that much with HTML/CSS ( Ahhh... this is perfect ; )
 
 ## You'll find mission details below
 
-- all sneakers are fetched from a mongo database
+- all sneakers are fetched from a mongo database (model, route, view)
 
 - the final users must be able to signup and signin
 
@@ -27,6 +27,7 @@ So you won't have to deal that much with HTML/CSS ( Ahhh... this is perfect ; )
 - don't mess up the design
 
 ---
+
 ## Warning
 
 - A lazy programer made some mistakes in the source code, you may have to find/fix the bugs !
@@ -44,7 +45,7 @@ So you won't have to deal that much with HTML/CSS ( Ahhh... this is perfect ; )
 
 ---
 
-## DB Schemas
+## DB Schemas = DONE
 
 - User {name, lastname, email, password}
 - Sneaker {name, ref, sizes, description, price, category: [men, women, kids], id_tags: [ObjectId] }
@@ -82,4 +83,3 @@ Each team will have 5 minutes to showcase their work, friday at 4PM.
 ## Hardcore bonus
 
 - 4 Add a shopcart feature :D
-

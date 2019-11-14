@@ -92,4 +92,13 @@ router.post("/signin",(req,res)=>{
     next(error);
   })
 })
+
+router.get("/logout", (req, res, next) => {
+    req.session.destroy((err) => {
+      // cannot access session here
+      res.redirect("/auth/signin");
+    });
+  });
+
 module.exports = router;
+

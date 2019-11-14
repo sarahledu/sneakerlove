@@ -33,7 +33,7 @@ router.post("/create-product", (req, res) => {
   sneakerModel
     .create(newSneaker)
     .then(() => {
-      req.flash("success", "sneaker successfully created");
+      req.flash("success", "product successfully created");
       res.redirect("products_manage");
     })
     .catch(dbErr => console.error(dbErr));
@@ -51,41 +51,41 @@ router.get("/manage-products", (req, res) => {
     });
 });
 
-router.get("/edit-sneaker/:id", (req, res) => {
+router.get("/product-edit/:id", (req, res) => {
   sneakerModel
     .findById(req.params.id)
     .populate("tag")
     .then(dbRes => {
       sneakerModel.find().then(tags => {
-        res.render("product-edit", {
-          artist: dbRes,
-          styles: styles,
-          css: ["artist"]
+        res.render("product_edit", {
+          sneaker: dbRes,
+          tag: tag,
+          css: ["products-manage"]
         });
       });
     })
     .catch(dbErr => console.log(dbErr));
 });
 
-router.post("/edit-artist/:id", (req, res) => {
+router.post("/product-edit/:id", (req, res) => {
   sneakerModel
     .findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      style: req.body.style,
-      isBand: Boolean(Number(req.body.isBand)),
-      description: req.body.description
+      ref: req.body.ref,
+      price: req.body.price,
+      category: req.body.category
     })
     .then(dbRes => {
-      req.flash("success", "artist successfully updated");
-      res.redirect("/manage-artists");
+      req.flash("success", "product successfully updated");
+      res.redirect("/products_manage");
     })
     .catch(dbErr => console.error(dbErr));
 });
 
-router.get("/delete-artist/:id", (req, res) => {
+router.get("/delete-product/:id", (req, res) => {
   sneakerModel.findByIdAndRemove(req.params.id).then(dbRes => {
-    req.flash("success", "artist successfully deleted");
-    res.redirect("/manage-artists");
+    req.flash("success", "product successfully deleted");
+    res.redirect("/products_manage");
   });
 });
 

@@ -7,7 +7,7 @@ const tag = require("./../models/Tag");
 router.get("/all-sneakers", (req, res) => {
   sneakerModel
     .find()
-    .populate("tag")
+    //.populate("tag")
     .then(dbRes => {
       res.render("products", { sneakers: dbRes, css: ["products"] });
     })

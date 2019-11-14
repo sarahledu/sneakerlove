@@ -2,12 +2,12 @@ const express = require("express"); // import express in this module
 const router = new express.Router(); // create an app sub-module (router)
 
 const sneakerModel = require("./../models/Sneaker");
-const tag = require("./../models/Tag");
+const tagModel = require("./../models/Tag");
 
 router.get("/all-sneakers", (req, res) => {
   sneakerModel
     .find()
-    //.populate("tag")
+    .populate("Tag")
     .then(dbRes => {
       res.render("products", { sneakers: dbRes, css: ["products"] });
     })
@@ -17,7 +17,10 @@ router.get("/all-sneakers", (req, res) => {
 // BACKEND ROUTES
 
 router.get("/create-product", (req, res) => {
-  res.render("products_add");
+  tagModel.find().then(dbRes => {
+    res.render("products_add", { tags: dbRes });
+  });
+  // .catch(err => console.error(err));
 });
 
 router.post("/create-product", (req, res) => {
@@ -33,6 +36,7 @@ router.post("/create-product", (req, res) => {
 
   sneakerModel
     .create(newSneaker)
+    .populate("tag")
     .then(() => {
       //   req.flash("success", "product successfully created");
       res.redirect("/products-manage");
@@ -55,12 +59,12 @@ router.get("/products-manage", (req, res) => {
 router.get("/product-edit/:id", (req, res) => {
   sneakerModel
     .findById(req.params.id)
-    // .populate("tag")
+    .populate("tag")
     .then(dbRes => {
-      sneakerModel.find().then(tag => {
+      sneakerModel.find().then(tags => {
         res.render("product_edit", {
           sneaker: dbRes,
-          tag: tag,
+          tag: id_tags,
           css: ["products-manage"]
         });
       });

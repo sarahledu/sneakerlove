@@ -31,4 +31,12 @@ router.get("/all-sneakers", (req, res) => {
     .catch(err => console.log(err));
 });
 
+router.get("/sneakers/women", (req, res) => {
+  // const label = [];
+  tagModel
+    .find()
+    .then(dbRes => res.render("products", { tags: dbRes }))
+    .catch(err => console.log(err));
+});
+
 module.exports = router;

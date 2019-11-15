@@ -59,27 +59,38 @@ router.get("/products-manage", (req, res) => {
 router.get("/product-edit/:id", (req, res) => {
   sneakerModel
     .findById(req.params.id)
+    .populate("id_tags")
     .then(dbRes => {
-      var tagsLabel = [];
-      console.log(dbRes.id_tags);
+      // var tagsLabel = [];
+      console.log(dbRes)
+       res.render("product_edit", {
+              sneaker: dbRes,
+              // tags: tagsLabel,
+              css: ["products-manage"]
+            });
+      console.log(dbRes.id_tags)
+      // if (dbRes.id_tags.length!==0){
+      //   dbRes.id_tags.forEach(element => {
+        // tagModel
+        //   .findById(element)
+        //   .then(tagRes => {
+        //     tagsLabel.push(tagRes);
+        //   })
+        //   .finally(() => {
+          
+        //   })
+        //   .catch(err => console.error(err));
+      // });
+      // }else {
+        // res.render("product_edit", {
+        //       sneaker: dbRes,
+        //       css: ["products-manage"]
+        //        })
+      // }
       //dbRes = élément de la collection recherchée (la sneaker)
       //cet élément détient un array d'id de tag (autre collection).
       //ce qu'on souhaite à la fin est un array d'éléments de la collection Tag correspondant aux id de tag
-      dbRes.id_tags.forEach(element => {
-        tagModel
-          .findById(element)
-          .then(tagRes => {
-            tagsLabel.push(tagRes);
-          })
-          .finally(() => {
-            res.render("product_edit", {
-              sneaker: dbRes,
-              tags: tagsLabel,
-              css: ["products-manage"]
-            });
-          })
-          .catch(err => console.error(err));
-      });
+            
     })
     .catch(dbErr => console.log(dbErr));
 });

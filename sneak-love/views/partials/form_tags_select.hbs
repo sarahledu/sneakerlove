@@ -3,4 +3,7 @@
     {{#each sneaker.id_tags}}
     <option value="{{this._id}}">{{this.label}}</option> 
     {{/each}}
+    {{#each tags}}
+    <option value="{{this._id}}">{{this.label}}</option> 
+    {{/each}}
 </select>

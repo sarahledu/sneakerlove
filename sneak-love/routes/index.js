@@ -17,7 +17,7 @@ router.get("/sneakers/:cat", (req, res) => {
 router.get("/one-product/:id", (req, res) => {
   sneakerModel
     .findById(req.params.id)
-    .then(dbRes => res.render("one_product", { sneakers: dbRes }))
+    .then(dbRes => res.render("one_product", { sneaker: dbRes }))
     .catch(err => console.log(err));
 });
 

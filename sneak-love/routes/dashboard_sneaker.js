@@ -25,6 +25,18 @@ router.get("/create-product", (req, res) => {
   // .catch(err => console.error(err));
 });
 
+router.post("/create-tag", (req,res)=>{
+  const newTag={
+    label: req.body.label,
+  }
+  tagModel
+  .create(newTag)
+  .then(()=>{
+    res.redirect("/create-product");
+  })
+  .catch(err=> console.error(err))
+})
+
 router.post("/create-product", uploader.single("image"), (req, res) => {
   const newSneaker = {
     name: req.body.name,

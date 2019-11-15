@@ -38,6 +38,7 @@ router.post("/create-tag", (req,res)=>{
 })
 
 router.post("/create-product", uploader.single("image"), (req, res) => {
+  if (req.file){
   const newSneaker = {
     name: req.body.name,
     ref: req.body.ref,
@@ -48,7 +49,11 @@ router.post("/create-product", uploader.single("image"), (req, res) => {
     category: req.body.category,
     id_tags: req.body.tags
   };
-
+  } else{
+    
+    res.redirect("/create-product");
+  }
+ 
   sneakerModel
     .create(newSneaker)
     .then(() => {
